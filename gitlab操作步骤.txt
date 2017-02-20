@@ -1,0 +1,41 @@
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test (master)
+$ git config --global user.name "zhangdelong"
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test (master)
+$ git config --global user.email "zhangdelong@dongdao.net"
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test (master)
+$ git clone http://git.dongdaodao.com/zhangdelong/backup.git\
+> ^C
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test (master)
+$ git clone http://git.dongdaodao.com/zhangdelong/backup.git
+Cloning into 'backup'...
+warning: You appear to have cloned an empty repository.
+Checking connectivity... done.
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test (master)
+$ cd backup
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test/backup (master)
+$ touch README.md
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test/backup (master)
+$ git add README.md
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test/backup (master)
+$ git commit -m "add README"
+[master (root-commit) 92b4c7d] add README
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test/backup (master)
+$ git push -u origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 216 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To http://git.dongdaodao.com/zhangdelong/backup.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+
+admin@DEMO-20150812LX MINGW64 ~/Desktop/test/backup (master)

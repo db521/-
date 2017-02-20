@@ -1,0 +1,24 @@
+[root@redis1 ~]# TZ='Asia/Shanghai'; export TZ
+[root@redis1 ~]# hwclock --show
+Wed 18 Nov 2015 01:29:59 PM CST  -0.024691 seconds
+[root@redis1 ~]# hwclock --systohc
+[root@redis1 ~]# hwclock --show
+Wed 18 Nov 2015 01:30:14 PM CST  -0.311400 seconds
+[root@redis1 ~]# date -R
+Wed, 18 Nov 2015 13:30:19 +0800
+[root@redis1 ~]# cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
+cp: overwrite `/etc/localtime'? 
+[root@redis1 ~]# rm -rf /etc/localtime 
+[root@redis1 ~]#  cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime 
+[root@redis1 ~]# date -r
+date: option requires an argument -- 'r'
+Try `date --help' for more information.
+[root@redis1 ~]# date -R
+Wed, 18 Nov 2015 13:30:47 +0800
+[root@redis1 ~]# clock -w  
+[root@redis1 ~]# date -R
+Wed, 18 Nov 2015 13:30:57 +0800
+[root@redis1 ~]# rdate -s time.nist.gov
+[root@redis1 ~]# date -R
+Wed, 18 Nov 2015 13:31:33 +0800
+[root@redis1 ~]# init 6

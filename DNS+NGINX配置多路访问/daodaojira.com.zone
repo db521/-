@@ -1,0 +1,19 @@
+$TTL 3H
+@	IN SOA	daodaojira.com. rname.invalid.  (
+					0	; serial
+					1D	; refresh
+					1H	; retry
+					1W	; expire
+					3H )	; minimum
+ 
+	   NS @
+	   A  127.0.0.1
+	   AAAA ::1
+  	   IN A  192.168.3.252
+daodaojira IN A  192.168.3.252
+
+//这个文档说明的正向解析，由域名解析到IP，这里的daodaojira表示的是域名
+//前缀
+//因为252是192.168.3.252的IP地址最后一位，daodaojira.com和daodaowiki.com都//是一
+//个IP地址。如果不是的话，要写明白
+

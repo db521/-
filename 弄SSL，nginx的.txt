@@ -1,0 +1,82 @@
+[root@localhost local]# openssl genrsa -des3 -out server.key 1024 
+Generating RSA private key, 1024 bit long modulus
+...............++++++
+.++++++
+e is 65537 (0x10001)
+Enter pass phrase for server.key:
+Verifying - Enter pass phrase for server.key:
+140219948095304:error:28069065:lib(40):UI_set_result:result too small:ui_lib.c:869:You must type in 4 to 8191 characters
+Enter pass phrase for server.key:
+Verifying - Enter pass phrase for server.key:
+[root@localhost local]# openssl req -new -key server.key -out server.csr 
+Enter pass phrase for server.key:
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:86
+State or Province Name (full name) []:beijing
+Locality Name (eg, city) [Default City]:beijing
+Organization Name (eg, company) [Default Company Ltd]:dongdao
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []:127.0.0.1
+Email Address []:zhangdelong@dongdao.net
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:1234
+An optional company name []:dd
+[root@localhost local]#  cp server.key server.key.org 
+[root@localhost local]# openssl rsa -in server.key.org -out server.key 
+Enter pass phrase for server.key.org:
+writing RSA key
+
+[root@localhost local]# openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt 
+Signature ok
+subject=/C=86/ST=beijing/L=beijing/O=dongdao/CN=127.0.0.1/emailAddress=zhangdelong@dongdao.net
+Getting Private key
+
+[root@localhost local]# locate nginx.conf
+/etc/nginx/nginx.conf
+[root@localhost local]# vim /etc/nginx/nginx.conf 
+[root@localhost local]# service nginx restart
+nginx: [emerg] BIO_new_file("/opt/gitlab/ca/server.crt") failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/opt/gitlab/ca/server.crt','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+nginx: configuration file /etc/nginx/nginx.conf test failed
+[root@localhost local]# vim /etc/nginx/nginx.conf 
+[root@localhost local]# locate server.crt
+/usr/local/server.crt
+
+
+
+
+[root@localhost local]# mkdir -p /opt/gitlab/ca/
+[root@localhost local]# cp /usr/local/server.* /opt/gitlab/ca/
+[root@localhost local]# cd /opt/gitlab/ca/
+[root@localhost ca]# ll
+total 16
+-rw-r--r--. 1 root root 912 Oct 25 23:56 server.crt
+-rw-r--r--. 1 root root 737 Oct 25 23:56 server.csr
+-rw-r--r--. 1 root root 891 Oct 25 23:56 server.key
+-rw-r--r--. 1 root root 963 Oct 25 23:56 server.key.org
+[root@localhost ca]# service nginx restart
+Stopping nginx:                                            [  OK  ]
+Starting nginx:                                            [  OK  ]
+
+[root@localhost ca]# locate nginx.conf
+/etc/nginx/nginx.conf
+[root@localhost ca]# vim /etc/nginx/nginx.conf 
+[root@localhost ca]# service nginx restart
+
+[root@localhost ca]# vim /etc/nginx/nginx.conf 
+[root@localhost ca]# vim /etc/local/www/index.html
+[root@localhost ca]# mkdir -p ^C
+[root@localhost ca]# mkdir -p /usr/local/www/
+[root@localhost ca]# vim /etc/local/www/index.html
+[root@localhost ca]# vim /usr/local/www/index.html
+[root@localhost ca]# service nginx restart
+Stopping nginx:                                            [  OK  ]
+Starting nginx:                                            [  OK  ]
+[root@localhost ca]# 

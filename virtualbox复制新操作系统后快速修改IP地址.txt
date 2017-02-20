@@ -1,0 +1,29 @@
+updatedb
+
+ifconfig
+0800277f9181
+
+
+HWaddr 08:00:27:08:C5:66  
+
+locate eth2
+/var/lib/dhclient/dhclient-5af10d77-cc90-4836-8675-7e83103f8cab-eth2.lease
+
+cp /etc/sysconfig/network-scripts/ifcfg-Auto_eth1 /etc/sysconfig/network-scripts/ifcfg-Auto_eth2
+
+vim /etc/sysconfig/network-scripts/ifcfg-Auto_eth2
+
+TYPE=Ethernet
+BOOTPROTO=none
+IPADDR=192.168.3.171
+NETMASK=255.255.248.0
+GATEWAY=192.168.1.1
+DNS1=192.168.3.171
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="Auto eth2"
+UUID=5af10d77-cc90-4836-8675-7e83103f8cab
+ONBOOT=yes
+
+service network restart

@@ -1,0 +1,27 @@
+
+vim /etc/rc.d/rc.local
+source /etc/profile
+mongod -f /usr/local/mongodb/mongodb.conf
+
+echo "export PATH=$PATH:/usr/local/mongodb/bin" >> /etc/profile 
+   
+source /etc/profile
+
+cd /usr/local/mongodb/
+vim mongodb.conf
+
+dbpath = /data/mongodb/myset 
+oplogSize = 1000 
+logpath = /data/mongodb/myset/myset.log 
+logappend = true 
+maxConns = 819 
+quiet=true 
+profile = 1 
+slowms = 5 
+rest = true 
+fork = true
+
+
+
+mongod -f /usr/local/mongodb/mongodb.conf
+

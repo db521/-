@@ -1,0 +1,16 @@
+$TTL 3H
+@	IN SOA	daodaojira.com. root.daodaojira.com.  (
+					0	; serial
+					1D	; refresh
+					1H	; retry
+					1W	; expire
+					3H )	; minimum
+	NS	 @
+	AAAA	::1
+252     PTR	daodaojira.com.	
+252	PTR     daodaowiki.com.
+
+
+//这个文档说明的反向解析，由IP解析到域名这里的252表示的是IP地址最后一位
+//因为252是192.168.3.252的IP地址最后一位，daodaojira.com和daodaowiki.com都是一
+//个IP地址。如果不是的话，要写明白

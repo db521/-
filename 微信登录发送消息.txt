@@ -1,0 +1,51 @@
+#-*- coding:utf-8 -*-
+import urllib
+import urllib2
+import  cookielib
+import json
+cj=cookielib.LWPCookieJar()
+opener=urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+urllib2.install_opener(opener)
+txt='说点啥呢说点啥'
+#-----------------登陆
+paras={'username':'745887513@qq.com','pwd':'75268282907981c01a7185cc3fae1198','imgcode':'','f':'json'}
+req=urllib2.Request('https://mp.weixin.qq.com/cgi-bin/login',urllib.urlencode(paras))
+req.add_header('Accept','application/json, text/javascript, */*; q=0.01')
+req.add_header('Accept-Encoding','gzip,deflate')
+req.add_header('Accept-Language','zh-CN,zh;q=0.8')
+req.add_header('Connection','keep-alive')
+req.add_header('Content-Type','application/x-www-form-urlencoded; charset=UTF-8')
+req.add_header('Host','mp.weixin.qq.com')
+req.add_header('Origin','https://mp.weixin.qq.com')
+req.add_header('Referer','https://mp.weixin.qq.com/')
+req.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36')
+req.add_header('X-Requested-With','XMLHttpRequest')
+ret=urllib2.urlopen(req)
+retread=ret.read()
+#下面是返回值base_resp是返回的内容名称
+#base_resp:{'base_resp': {'err_msg': 'ok', 'ret': 0}, 'redirect_url': '/cgi-bin/home?t=home/index&lang=zh_CN&token=57193538'}
+base_resp=json.loads(retread)
+#redirect_url是返回的内容里面的URL部分的内容，里面的token是最后的数字部分，利用字典的查询方法查询到这个值
+#redirect_url:/cgi-bin/home?t=home/index&lang=zh_CN&token=57193538
+redirect_url=base_resp['redirect_url']
+#下面使用不知道什么鸟方法，可以获取一个长串字符串里面的数字部分，很好用
+#token:57193538
+tokenkey=filter(lambda x:x.isdigit(),redirect_url)
+#-----------------发送消息
+paras2={'token':tokenkey,'lang':'zh_CN','f':'json','ajax':'1','random':'0.7541101684328169','type':'1','content':txt,'tofakeid':'2349156400','imgcode':''}
+#这里的requestURL地址写general 里面的request URL
+#这里的urllib.urlencode 填写的是FORM data里面的字段值。也就是paras2的值。
+req2=urllib2.Request('https://mp.weixin.qq.com/cgi-bin/singlesend?t=ajax-response&f=json&token=tokenkey&lang=zh_CN',urllib.urlencode(paras2))
+#下面的一大长串是request header里面的内容
+req2.add_header('Accept','application/json, text/javascript, */*; q=0.01')
+req2.add_header('Accept-Encoding','gzip,deflate,sdch')
+req2.add_header('Accept-Language','zh-CN,zh;q=0.8')
+req2.add_header('Connection','keep-alive')
+req2.add_header('Content-Type','application/json; charset=UTF-8')
+req2.add_header('Host','mp.weixin.qq.com')
+req2.add_header('Referer','https://mp.weixin.qq.com/cgi-bin/singlesendpage?t=message/send&action=index&tofakeid=2349156400&token=1733251091&lang=zh_CN')
+req2.add_header('User-Agent','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36')
+req2.add_header('X-Requested-With','XMLHttpRequest')
+#这里都是reqest header里面的内容
+ret2=urllib2.urlopen(req2)
+print 'x',ret2.read()

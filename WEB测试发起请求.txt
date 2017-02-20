@@ -1,0 +1,40 @@
+char str[1000];//定义变量 用于传参数
+	char url[1000];//定义接口url
+	lr_start_transaction("API");//开始事物
+
+	//定义returnData用于接受接口返回的内容
+     web_reg_save_param_ex("ParamName=returnData", "SaveLen=-1", "Notfound=warning", SEARCH_FILTERS,"Scope=body", LAST);
+
+	 //这个没用到
+	 web_reg_find("Search=Body", //定义查找范围
+	"SaveCount=result", //定义查找计数变量名称
+	"Text=<Code>0</Code>", //定义查找内容
+	 LAST);
+
+	 //开始拼接参数
+	strcpy(str, "Dvaid=");
+    strcat(str, lr_eval_string("{Dvaid}"));
+    strcat(str, "&BeginTime=");
+    strcat(str, lr_eval_string("{BeginTime}"));
+    strcat(str, "&EndTime=");
+    strcat(str, lr_eval_string("{EndTime}"));
+    lr_save_string(str,"str");
+    lr_output_message(str);
+//拼接整个地址
+	strcpy(url,"URL=http://XXXX.cn/common/ComAPI/79/?");
+    strcat(url, str);
+	 lr_save_string(url,"url");
+     lr_output_message(url);
+
+	 //进行调用
+ web_custom_request("API",
+      url,
+      "Method=post",
+      "Mode=HTTP",
+     LAST);
+
+//获取返回数据
+  lr_output_message( lr_eval_string("{returnData}"));
+
+//结束事物
+lr_end_transaction("API", LR_AUTO);
